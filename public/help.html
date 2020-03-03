@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="icon" href="https://cdn.glitch.com/c36183e6-18ec-48bc-8079-ab31d9df3372%2Fgrunge-heart-png-16.ico?v=1573144781119" type="image/x-icon"/>
+  <title>not an unblocker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- header font -->
+  <link href="//fonts.googleapis.com/css?family=Orbitron" rel="stylesheet" type="text/css">
+  
+  <!-- body font -->
+  <link href="//fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css">
+  
+  <style type="text/css">
+  
+    /* fonts */
+    body { font-family: 'Droid Sans', arial, serif;  letter-spacing: 1px;}
+    h1 { font-family: 'Orbitron', arial, serif; letter-spacing: 2px;}
+    h2, h3, h4, h5, h6 { letter-spacing: 2px; font-weight: normal;}
+  
+    /* colors */
+    body { background-color: #000306; color: white;}
+    a { color: #62BECB; }
+    a:hover {color: #82DEEB }
+
+	#error {  border:1px dotted white; background: brown; }
+
+    /* layout */
+    body { text-align: center; }
+    .container { width: 1080px; margin: 40px auto; text-align: center;  max-width: calc(100% - 10px);}
+    
+    h2, h3, h4, h5, h6 { margin-bottom: 0;  }
+    ul { line-height: 150%; }
+    ul, p {  margin-top: 5px; margin-bottom: 0; }
+    .main, .footer { padding: 1px 10px 0 10px; }
+    
+    #error {display: none; padding: 5px 10px; margin: 30px 10px; }
+    
+    form ul { list-style-type: none; padding-left: 25px;}
+    input[type=text] { width: 640px; max-width: calc(100% - 8em) }
+    
+    .footer { position: relative; clear: both;}
+    .footer p { margin:0; position: absolute; bottom: 10px;  right: 10px; padding-left: 10px; }
+    
+
+        }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="main">
+  
+      <div id="error"></div>
+
+      <form action="no-js" method="get" id="unblocker-form">
+        <p>
+        it doesnt unblock things that require an active connection (like twitch, youtube, etc)<br>
+        it just saves a snapshot of the site<br>
+        <br>
+        <s>to unblock reddit change https://reddit.com/[whatever] to https://old.reddit.com/[whatever] (if you click on a reddit link and it breaks/uses the new UI it probably went to a reddit.com instead of an old.reddit.com, just add the "old." in the URL bar)<br>
+          if you want to go to a specific subreddit input old.reddit.com/r/[subreddit]</s> it seems that reddit is broken and just gives you a server error. rip. use archive.is instead <br>
+        <br>
+        flash games work (most at least, i checked maxgames and it worked)<br>
+        <br>
+        tumblr works if you go to a specific blog (some blog themes might mess up the unblocker, in that case use one of the other sites below)<br>
+        <br>
+        you cant log in onto anything so you cant use discord or scroll your personalized reddit/tumblr feed or whatever<br>
+        <br>
+        if a site doesn't work or starts to not work or breaks for some reason, try to save it using http://archive.is/<br>
+        if archive.is doesn't work, use http://web.archive.org/<br>
+        if web.archive.org doesn't work then you're out of luck<br>
+        <br>
+        </p>
+      </form>
+      <a href="index.html"><button>go back</button></a>
+    </div>
+  </div>
+
+
+	<script>
+		function $(id){
+			return document.getElementById(id);
+		}
+		
+		$('unblocker-form').onsubmit = function(){
+			var url = $('url').value;
+			if(url.substr(0,4) != "http"){
+				url = "http://" + url;
+			}
+			window.location.pathname = 'proxy/' + url;
+			return false;
+		};
+		
+		function checkError(){
+			var search = window.location.search;
+			var start = search.indexOf('error=');
+			if(start > -1){
+				var stop = search.indexOf('&', start);
+				if(stop == -1){ stop = undefined; }
+				// +6 for "error="
+				var err = search.substr(start+6, stop);
+                var $error = $('error');
+				$error.innerText = $error.textContent = decodeURIComponent(err);
+				$error.style.display = "block";
+			}
+		}
+    
+		window.onload = function() { 
+			$('url').focus(); 
+			checkError(); 
+		}
+	</script>
+  
+  
+</body>
+</html>
